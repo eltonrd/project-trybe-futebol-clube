@@ -3,17 +3,17 @@ import db from '.';
 import Teams from './TeamsModel';
 
 export default class Matches extends Model {
-  public id!:number;
+  public id:number;
 
-  public homeTeam!: number;
+  public homeTeam: number;
 
-  public homeTeamGoals!: number;
+  public homeTeamGoals: number;
 
-  public awayTeam!: number;
+  public awayTeam: number;
 
-  public awayTeamGoals!: number;
+  public awayTeamGoals: number;
 
-  public inProgress!: boolean;
+  public inProgress: boolean;
 }
 
 Matches.init({
