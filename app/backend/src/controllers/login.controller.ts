@@ -1,16 +1,15 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import LoginService from '../services/login.service';
 
 export default class LoginController {
-  public static async login(req: Request, res: Response) {
+  public static async login(req: Request, res: Response, next: NextFunction): Promise<
+  Response | undefined> {
     try {
-      const { email, password } = req.body;
-      const loginUser = await LoginService.login(email, password);
-      if (loginUser) {
-        res.status(200).json(loginUser);
-      }
-    } catch (error) {
-      res.status(401).json({ message: 'Incorrect email or password' });
+      const { email } = req.body;
+      const loginUser = await LoginService.login(email);
+      return res.status(200).json(loginUser);
+    } catch (Error) {
+      next(Error);
     }
   }
 }

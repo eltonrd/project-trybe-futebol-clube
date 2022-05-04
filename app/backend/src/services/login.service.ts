@@ -1,33 +1,30 @@
-import * as bcrypt from 'bcryptjs';
 import Users from '../database/models/UsersModel';
 import User from '../interfaces/user.interface';
 import JwtToken from '../utils/jwt.token';
 
 export default class LoginService {
   public static async findUserByEmail(email: string): Promise<User> {
-    return Users.findOne({
+    const user = await Users.findOne({
       where: { email },
-    }) as Promise<User>;
+    });
+    return user as User;
   }
 
-  public static async login(email: string, password: string) {
+  public static async login(email: string) {
     const user = await this.findUserByEmail(email);
-    if (bcrypt.compareSync(password, user.password || '')) {
-      const token = JwtToken.sign({
+    const token = JwtToken.sign({
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      email: user.email,
+    });
+    return {
+      user: {
         id: user.id,
         username: user.username,
         role: user.role,
         email: user.email,
-      });
-      return {
-        user: {
-          id: user.id,
-          username: user.username,
-          role: user.role,
-          email: user.email,
-        },
-        token };
-    }
-    return null;
+      },
+      token };
   }
 }
