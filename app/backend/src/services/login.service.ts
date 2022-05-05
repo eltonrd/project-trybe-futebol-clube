@@ -27,4 +27,10 @@ export default class LoginService {
       },
       token };
   }
+
+  public static async getRole(authorization: string): Promise<User> {
+    const token = authorization;
+    const user = JwtToken.verify(token);
+    return user as User;
+  }
 }

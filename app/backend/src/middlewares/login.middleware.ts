@@ -9,7 +9,6 @@ export default class LoginMiddleware {
     if (email === '') {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
-    console.log(emailRegex.test(email));
     if (!emailRegex.test(email)) {
       return res.status(401).json({ message: 'Incorrect email or password' });
     }

@@ -22,6 +22,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', loginRouter);
+    this.app.use('/login/validate', loginRouter);
   }
 
   // ...

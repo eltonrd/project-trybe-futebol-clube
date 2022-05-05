@@ -10,5 +10,6 @@ loginRouter.post(
   LoginMiddleware.passwordValidation,
   LoginController.login,
 );
+loginRouter.get('/', LoginController.getRole);
 
 export default loginRouter;
