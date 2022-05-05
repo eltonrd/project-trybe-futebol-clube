@@ -4,11 +4,12 @@ import Users from '../database/models/UsersModel';
 
 export default class LoginMiddleware {
   public static emailValidation(req: Request, res: Response, next: NextFunction) {
-    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+    const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
     const { email } = req.body;
     if (email === '') {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
+    console.log(emailRegex.test(email));
     if (!emailRegex.test(email)) {
       return res.status(401).json({ message: 'Incorrect email or password' });
     }

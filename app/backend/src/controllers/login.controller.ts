@@ -3,7 +3,7 @@ import LoginService from '../services/login.service';
 
 export default class LoginController {
   public static async login(req: Request, res: Response, next: NextFunction): Promise<
-  Response | undefined> {
+  Response | void> {
     try {
       const { email } = req.body;
       const loginUser = await LoginService.login(email);
