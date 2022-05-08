@@ -1,4 +1,4 @@
-export default interface Match {
+interface Match {
   id?: number;
   homeTeam: number;
   homeTeamGoals: number;
@@ -12,3 +12,13 @@ export default interface Match {
     teamName: string;
   }
 }
+
+interface MatchCreate {
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}
+
+export { Match, MatchCreate };
