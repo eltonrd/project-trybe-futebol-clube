@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-// import JwtToken from '../utils/jwt.token';
 import MatchesService from '../services/matches.service';
 
 export default class MatchesController {
@@ -17,11 +16,6 @@ export default class MatchesController {
   Response | void > {
     try {
       const matches = req.body;
-      if (matches.homeTeam === matches.awayTeam) {
-        return res.status(400).json(
-          { message: 'It is not possible to create a match with two equal teams' },
-        );
-      }
       const matchCreated = await MatchesService.createMatch(matches);
       return res.status(201).json(matchCreated);
     } catch (Error) {
