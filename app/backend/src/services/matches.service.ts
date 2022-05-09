@@ -52,4 +52,19 @@ export default class MatchesService {
       return Error;
     }
   }
+
+  public static async updateMatchGoals(id: string, payload: {
+    homeTeamGoals: number, awayTeamGoals: number
+  }) {
+    try {
+      const getMatch = await this.getMatchById(id);
+      if (getMatch?.inProgress === true) {
+        const updateGoals = await Matches.update(payload, { where: { id } });
+        return updateGoals;
+      }
+      return null;
+    } catch (Error) {
+      return Error;
+    }
+  }
 }
