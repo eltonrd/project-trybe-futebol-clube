@@ -19,11 +19,6 @@ export default class MatchesService {
   }
 
   public static async createMatch(match: MatchCreate): Promise<MatchCreate | null> {
-    const getHomeTeam = await Teams.findOne({ where: { id: match.homeTeam } });
-    const getAwayTeam = await Teams.findOne({ where: { id: match.awayTeam } });
-    if (getHomeTeam === getAwayTeam) {
-      return null;
-    }
     const newMatch = await Matches.create(match);
     return newMatch as MatchCreate;
   }

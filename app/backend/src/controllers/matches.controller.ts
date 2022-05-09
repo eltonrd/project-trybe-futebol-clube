@@ -16,14 +16,14 @@ export default class MatchesController {
   public static async createMatch(req: Request, res: Response, next: NextFunction): Promise<
   Response | void > {
     try {
-      const match = await MatchesService.createMatch(req.body);
-      if (!match) {
-        return (
-          res.status(401).json(
-            { message: 'It is not possible to create a match with two equal teams' },
-          ));
+      const matches = req.body;
+      if (matches.homeTeam === matches.awayTeam) {
+        return res.status(400).json(
+          { message: 'It is not possible to create a match with two equal teams' },
+        );
       }
-      return res.status(201).json(match);
+      const matchCreated = await MatchesService.createMatch(matches);
+      return res.status(201).json(matchCreated);
     } catch (Error) {
       next(Error);
     }
