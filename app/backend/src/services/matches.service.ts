@@ -23,7 +23,28 @@ export default class MatchesService {
     return newMatch as MatchCreate;
   }
 
+  public static async getMatchById(id: string): Promise<Match | null> {
+    const match = await Matches.findOne({
+      where: { id },
+      include: [{
+        model: Teams,
+        as: 'teamHome',
+        attributes: ['teamName'],
+      }, {
+        model: Teams,
+        as: 'teamAway',
+        attributes: ['teamName'],
+      }],
+    });
+    return match as unknown as Match;
+  }
+
   public static async updateMatch(id: string) {
-    await Matches.update({ inProgress: false }, { where: { id } });
+    const getMatch = await this.getMatchById(id);
+    if (getMatch?.inProgress === true) {
+      await Matches.update({ inProgress: false }, { where: { id } });
+    } else {
+      await Matches.update({ inProgress: true }, { where: { id } });
+    }
   }
 }
