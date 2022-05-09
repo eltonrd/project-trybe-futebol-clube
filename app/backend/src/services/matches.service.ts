@@ -40,11 +40,16 @@ export default class MatchesService {
   }
 
   public static async updateMatch(id: string) {
-    const getMatch = await this.getMatchById(id);
-    if (getMatch?.inProgress === true) {
-      await Matches.update({ inProgress: false }, { where: { id } });
-    } else {
-      await Matches.update({ inProgress: true }, { where: { id } });
+    try {
+      const getMatch = await this.getMatchById(id);
+      if (getMatch?.inProgress === true) {
+        const updateFalse = await Matches.update({ inProgress: false }, { where: { id } });
+        return updateFalse;
+      }
+      const updateTrue = await Matches.update({ inProgress: true }, { where: { id } });
+      return updateTrue;
+    } catch (Error) {
+      return Error;
     }
   }
 }

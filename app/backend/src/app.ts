@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import loginRouter from './routers/login.route';
 import teamsRouter from './routers/teams.route';
 import matchesRouter from './routers/matches.route';
@@ -10,10 +11,14 @@ class App {
   constructor() {
     this.app = express();
     this.config();
-    // ...
+    this.app.use('/login', loginRouter);
+    this.app.use('/login/validate', loginRouter);
+    this.app.use('/teams', teamsRouter);
+    this.app.use('/teams/:id', teamsRouter);
+    this.app.use('/matches', matchesRouter);
   }
 
-  private config():void {
+  private config(): void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
@@ -23,11 +28,7 @@ class App {
 
     this.app.use(accessControl);
     this.app.use(express.json());
-    this.app.use('/login', loginRouter);
-    this.app.use('/login/validate', loginRouter);
-    this.app.use('/teams', teamsRouter);
-    this.app.use('/teams/:id', teamsRouter);
-    this.app.use('/matches', matchesRouter);
+    this.app.use(cors());
   }
 
   // ...
