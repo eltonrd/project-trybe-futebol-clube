@@ -13,7 +13,17 @@ matchesRouter.post(
   MatchMiddleware.verifyMatch,
   MatchesController.createMatch,
 );
-matchesRouter.patch('/:id/finish', TokenMiddleware.verifyToken, MatchesController.updateMatch);
-matchesRouter.patch('/:id', TokenMiddleware.verifyToken, MatchesController.updateMatchGoals);
+matchesRouter.patch(
+  '/:id/finish',
+  TokenMiddleware.verifyToken,
+  MatchMiddleware.verifyMatchUpdate,
+  MatchesController.updateMatch,
+);
+matchesRouter.patch(
+  '/:id',
+  TokenMiddleware.verifyToken,
+  MatchMiddleware.verifyMatchUpdate,
+  MatchesController.updateMatchGoals,
+);
 
 export default matchesRouter;

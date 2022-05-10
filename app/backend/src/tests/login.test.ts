@@ -32,8 +32,9 @@ describe('Testa a rota /login', () => {
   it('A rota /login deve retornar um status 200', async () => {
     chaiHttpResponse = await chai.request(app).post('/login').send(requestOk);
     expect(chaiHttpResponse).to.have.status(200);
+    expect(chaiHttpResponse.body).to.have.property('user');
+    expect(chaiHttpResponse.body).to.have.property('token');
   });
-
   it('Os campos email e password devem ser válidos', async () => {
     chaiHttpResponse = await chai.request(app).post('/login').send(requestFail);
     expect(chaiHttpResponse.body.error).to.be.equal('Incorrect email or password');

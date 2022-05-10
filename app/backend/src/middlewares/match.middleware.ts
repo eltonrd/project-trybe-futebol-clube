@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import TeamsService from '../services/teams.service';
+import MatchesService from '../services/matches.service';
 
 export default class MatchMiddleware {
   public static async verifyTeam(req: Request, res: Response, next: NextFunction) {
@@ -28,6 +29,19 @@ export default class MatchMiddleware {
       }
       req.body.homeTeam = homeTeam;
       req.body.awayTeam = awayTeam;
+      next();
+    } catch (Error) {
+      next(Error);
+    }
+  }
+
+  public static async verifyMatchUpdate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const matchId = req.params.id;
+      const matchFound = await MatchesService.getMatchById(matchId);
+      if (!matchFound) {
+        return res.status(404).json({ message: 'There is no match with such id!' });
+      }
       next();
     } catch (Error) {
       next(Error);

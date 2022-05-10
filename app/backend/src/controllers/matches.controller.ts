@@ -44,7 +44,7 @@ export default class MatchesController {
       const matchGoals = req.body;
       const matchGoalsUpdate = await MatchesService.updateMatchGoals(matchId, matchGoals);
       if (!matchGoalsUpdate) {
-        return res.status(401).json({ message: 'Update Error' });
+        return res.status(401).json({ message: 'The match is not in progress!' });
       }
       return res.status(200).json({ message: 'Match updated' });
     } catch (Error) {
