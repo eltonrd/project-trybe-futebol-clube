@@ -76,5 +76,3 @@ describe('Testa a rota /matches', () => {
     expect(chaiHttpResponse.body.error).to.be.equal('There is no match with such id!');
   })
 });
-
-
