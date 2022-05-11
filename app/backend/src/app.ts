@@ -6,7 +6,6 @@ import matchesRouter from './routers/matches.route';
 
 class App {
   public app: express.Express;
-  // ...
 
   constructor() {
     this.app = express();
