@@ -5,7 +5,7 @@ import Leaderboard from '../interfaces/leaderboard.interface';
 export default class LeaderboardService {
   public static async getHomeMatches(id: number): Promise<Matches[]> {
     const matchesHome = await Matches.findAll({
-      where: { homeTeam: id },
+      where: { homeTeam: id, inProgress: false },
     });
     return matchesHome;
   }
@@ -18,8 +18,7 @@ export default class LeaderboardService {
   public static getHomeVictories(matches: Matches[]): number {
     let victories = 0;
     matches.forEach((item) => {
-      const homeGoals = item.homeTeamGoals > item.awayTeamGoals ? victories += 1 : null;
-      return homeGoals;
+      if (item.homeTeamGoals > item.awayTeamGoals) victories += 1;
     });
     return victories;
   }
@@ -27,8 +26,7 @@ export default class LeaderboardService {
   public static getHomeDraws(matches: Matches[]): number {
     let draws = 0;
     matches.forEach((item) => {
-      const homeDraws = item.homeTeamGoals === item.awayTeamGoals ? draws += 1 : null;
-      return homeDraws;
+      if (item.homeTeamGoals === item.awayTeamGoals) draws += 1;
     });
     return draws;
   }
@@ -36,8 +34,7 @@ export default class LeaderboardService {
   public static getHomeLosses(matches: Matches[]): number {
     let losses = 0;
     matches.forEach((item) => {
-      const homeLosses = item.homeTeamGoals < item.awayTeamGoals ? losses += 1 : null;
-      return homeLosses;
+      if (item.homeTeamGoals < item.awayTeamGoals) losses += 1;
     });
     return losses;
   }
@@ -45,10 +42,7 @@ export default class LeaderboardService {
   public static getHomeGoalsFavor(matches: Matches[]): number {
     let goalsFavor = 0;
     matches.forEach((item) => {
-      const homeGoalsFavor = (
-        item.homeTeamGoals > item.awayTeamGoals ? goalsFavor += item.homeTeamGoals : null
-      );
-      return homeGoalsFavor;
+      goalsFavor += item.homeTeamGoals;
     });
     return goalsFavor;
   }
@@ -56,10 +50,7 @@ export default class LeaderboardService {
   public static getHomeGoalsOwn(matches: Matches[]): number {
     let goalsOwn = 0;
     matches.forEach((item) => {
-      const homeGoalsOwn = (
-        item.homeTeamGoals < item.awayTeamGoals ? goalsOwn += item.homeTeamGoals : null
-      );
-      return homeGoalsOwn;
+      goalsOwn += item.awayTeamGoals;
     });
     return goalsOwn;
   }
@@ -107,6 +98,8 @@ export default class LeaderboardService {
       if (a.goalsFavor > b.goalsFavor) return -1;
       if (a.goalsOwn < b.goalsOwn) return 1;
       if (a.goalsOwn > b.goalsOwn) return -1;
+      if (a.efficiency < b.efficiency) return 1;
+      if (a.efficiency > b.efficiency) return -1;
       return 0;
     });
   }
