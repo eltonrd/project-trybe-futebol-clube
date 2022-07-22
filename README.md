@@ -2,7 +2,7 @@
 
 Esse projeto foi desenvolvido durante o módulo de _BackEnd_ na Trybe! #vqv 🚀
 
-Aqui você vai encontrar os detalhes de como foi o desenvolvimento do projeto e quais foram os requisitos obrigatórios e opcionais para o desenvolvimento.
+Aqui você vai encontrar os detalhes de como foi o desenvolvimento do projeto.
 
 ---
 # Habilidades desenvolvidas
