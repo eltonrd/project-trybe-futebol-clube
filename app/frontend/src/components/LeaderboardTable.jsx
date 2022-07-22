@@ -12,7 +12,7 @@ const LeaderboardTable = ({ currentFilter }) => {
     .catch((error) => console.log(error));
 
   useEffect(() => {
-    const apiLeaderboard = '/leaderboard';
+    const apiLeaderboard = '/leaderboard/home';
     const apiLeaderboardHome = '/leaderboard/home';
     const apiLeaderboardAway = '/leaderboard/away';
     switch (currentFilter) {
